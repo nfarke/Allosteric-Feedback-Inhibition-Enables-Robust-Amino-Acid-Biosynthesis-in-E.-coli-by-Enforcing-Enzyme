@@ -1,5 +1,3 @@
-%this file generates the .mat-file PAR.mat. It contains steady state
-%solutions of both models (wild-type and no-allosteric feedback model)
 function create_SS_solutions_par
 ParSize = 5000; %adjust number of Parameter sets
 tspan = 0:1:5000;
