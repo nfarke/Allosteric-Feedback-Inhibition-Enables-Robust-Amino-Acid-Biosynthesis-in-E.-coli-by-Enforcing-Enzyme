@@ -1,6 +1,4 @@
 function create_SS_solutions_par2
-%this function generations steady state solutions and parameter sets for
-%the continuation method (PAR.mat)
 
 ParSize = 5000;
 tspan = 0:1:5000;
