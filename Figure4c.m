@@ -1,6 +1,6 @@
 function Figure4c
 load PAR2.mat
-Pert = 500; %perturbation degree 100 fold in this case
+Pert = 500;
 NoSteps = Pert*10; %number of steps
 varpert = {'beta22'}; %define perturbation variable, here it is beta22
 varpert1 = sym(varpert);
