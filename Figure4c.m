@@ -100,7 +100,7 @@ U = Varini + t.*(Varfinal-Varini);
 par(find(strcmp(psym,varpert))) = U;
 XJac = DFDX(par');
 value = max(real(eig(XJac))); % when value = 0, an event is triggered
-if mean(real(eig(XJac)))> -1E-05 || any(par<0) || etime(clock,TimeIn)> 1  
+if max(real(eig(XJac)))> -1E-05 || any(par<0) || etime(clock,TimeIn)> 1  
     value = 0;
 end
 isterminal = 1; % terminate after the first event
