@@ -69,7 +69,7 @@ mte=0.17;% maximum theoretical enzyme (mte) amount (e1+e2, taking the
 
 %create figure
 for iv = 1:size(ratio1_reshaped,2)
-    scatter(e_start_reshaped(:,iv)/mte*100,pert_final_reshaped(:,iv)/0.99715*100,10,cx(iv,:),'filled');
+    scatter(e_start_reshaped(:,iv)/mte*100,pert_final_reshaped(:,iv)*100,10,cx(iv,:),'filled');
     hold on
 end
 index=1:EnsembleSize/10.005:EnsembleSize;
