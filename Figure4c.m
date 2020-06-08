@@ -42,7 +42,7 @@ parfor n = 1:EnsembleSize
     Varmax = par(find(strcmp(p,varpert)))/Pert; %state at maximum level of perturbation
     InitialState = [par(end-3) par(end-2) par(end-1) par(end)];
     
-    options = odeset('Events',@event_function,'RelTol', 1e-9, 'AbsTol', 1e-9);
+    options = odeset('Events',@event_function,'RelTol', 1e-7, 'AbsTol', 1e-7);
     TimeIn=clock;
     [t, conc1] = ode23s(@dxFunc,0:1/NoSteps:1,InitialState,options,psym,par,Varini,Varmax,DFDX,DFDP,TimeIn,varpert);
     Var = repmat(Varini,1,length(t)) + repmat(t',length(Varini),1).*repmat(Varmax-Varini,1,length(t));
@@ -88,7 +88,7 @@ end
 function dx= dxFunc(t,x,psym,par,Varini,Varfinal,DFDX,DFDP,~,varpert)
 par(end-3:end) = x;
 U = Varini + t.*(Varfinal-Varini);
-par(find(strcmp(psym,varpert))) = U;
+par(find(ismember(psym,varpert))) = U;
 XJac = DFDX(par');
 DFDP1 = DFDP(par');
 dx = -XJac\DFDP1*(Varfinal-Varini);
@@ -97,10 +97,10 @@ end
 function [value,isterminal,direction] = event_function(t,x,psym,par,Varini,Varfinal,DFDX,~,TimeIn,varpert)
 par(end-3:end)=x;
 U = Varini + t.*(Varfinal-Varini);
-par(find(strcmp(psym,varpert))) = U;
+par(find(ismember(psym,varpert))) = U;
 XJac = DFDX(par');
 value = max(real(eig(XJac))); % when value = 0, an event is triggered
-if max(real(eig(XJac)))> -1E-05 || any(par<0) || etime(clock,TimeIn)> 1  
+if max(real(eig(XJac)))> -1E-05 || any(par<0) %|| etime(clock,TimeIn)> 1  
     value = 0;
 end
 isterminal = 1; % terminate after the first event
